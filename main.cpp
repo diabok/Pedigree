@@ -83,9 +83,5 @@ std::vector<Individual *> sort_traverse(std::vector<Individual *> parents) {
 				2. `to_be_sorted.push_back(...obj.children)`
 			2. nie -> skip
      */
-    for(auto it: result)
-    {
-        std::cout<<it<< std::endl;
-    }
     return result;
 }
