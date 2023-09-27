@@ -1,6 +1,5 @@
-#ifndef TWORCZOSC_MILOSZA_INDIVIDUAL_H
-#define TWORCZOSC_MILOSZA_INDIVIDUAL_H
-
+#ifndef 
+#define 
 
 #include <vector>
 #include <string>
