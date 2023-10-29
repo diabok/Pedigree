@@ -1,5 +1,5 @@
-#ifndef 
-#define 
+#ifndef PEDIGREE_INDIVIDUAL_H
+#define PEDIGREE_INDIVIDUAL_H
 
 #include <vector>
 #include <string>
@@ -10,22 +10,13 @@ private:
     std::vector<Individual*> children;
     std::string id;
 public:
-    Individual(const std::vector<Individual *> &parents, const std::vector<Individual *> &children,
-               const std::string &id);
+    explicit Individual(std::string id);
 
-    bool operator<(const Individual &rhs) const;
-
-    bool operator>(const Individual &rhs) const;
-
-    bool operator<=(const Individual &rhs) const;
-
-    bool operator>=(const Individual &rhs) const;
-
-    Individual(std::string id);
-
-    Individual(std::vector<Individual *> parents, std::string id);
+    Individual(const std::string& id, Individual *mother, Individual *father);
 
     bool has_parents();
+
+    void set_parents(Individual *father, Individual *mother);
 };
 
 
