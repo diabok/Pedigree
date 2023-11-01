@@ -1,10 +1,5 @@
 #include "Individual.h"
-#include <utility>
 
-
-Individual::Individual(std::string id) {
-    this->id = std::move(id);
-}
 
 Individual::Individual(const std::string& id, Individual *mother, Individual *father): Individual(id) {
     set_parents(father, mother);
@@ -24,4 +19,12 @@ void Individual::set_parents(Individual *father, Individual *mother) {
         mother->children.push_back(this);
         this->parents.push_back(mother);
     }
+}
+
+bool IndividualBase::operator==(const IndividualBase &rhs) const {
+    return id == rhs.id;
+}
+
+const std::string &IndividualBase::get_id() const {
+    return id;
 }

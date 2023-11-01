@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "Pedigree.h"
-#include "Individual.h"
 
 
 void Pedigree::add(const std::string &id, const std::string &father_id, const std::string &mother_id) {
@@ -13,13 +12,14 @@ void Pedigree::add(const std::string &id, const std::string &father_id, const st
     if (!contains_id(id)) {
         auto *individual = new Individual(id, father, mother);
         elements++;
-        individuals[id] = individual;
+        individuals.insert(individual);
 
         if (!individual->has_parents()) {
             roots.insert(individual);
         }
     } else {
-        Individual *individual = individuals[id];
+        auto *key_ref = new IndividualBase(id);
+        Individual *individual = (Individual *) *individuals.find(key_ref);
         if (!individual->has_parents()) {
             individual->set_parents(father, mother);
             if (is_root(individual)) {
@@ -37,10 +37,11 @@ Individual *Pedigree::create_or_get(const std::string &id) {
     } else if (!contains_id(id)) {
         auto *individual = new Individual(id);
         elements++;
-        individuals[id] = individual;
+        individuals.insert(individual);
         return individual;
     }
-    return individuals[id];
+
+    return (Individual *) *individuals.find(new IndividualBase(id));
 }
 
 bool Pedigree::is_empty_id(const std::string &id) { return id == "0"; }
@@ -51,4 +52,10 @@ long Pedigree::size() const {
 
 bool Pedigree::is_root(Individual *individual) { return roots.find(individual) != roots.end(); }
 
-bool Pedigree::contains_id(const std::string &id) { return individuals.find(id) != individuals.end(); }
+bool Pedigree::contains_id(const std::string &id) { return individuals.contains(new IndividualBase(id)); }
+
+Pedigree::Pedigree(const std::vector<IndividualEntry>& entries) {
+    for (const auto &entry : entries) {
+        add(entry.id, entry.father_id, entry.mother_id);
+    }
+}

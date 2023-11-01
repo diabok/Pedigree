@@ -9,4 +9,5 @@ add_executable(tworczosc_milosza main.cpp
         Pedigree.cpp
         Pedigree.h
         PedigreeLoader.cpp
-        PedigreeLoader.h)
+        PedigreeLoader.h
+        IndividualEntry.h)
