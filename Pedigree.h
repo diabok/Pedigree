@@ -9,16 +9,20 @@
 #include <string>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include "Individual.h"
+#include "IndividualEntry.h"
 
 class Pedigree {
 
 public:
+    explicit Pedigree(const std::vector<IndividualEntry>& entries);
+
     [[nodiscard]] long size() const;
-    void add(const std::string& id, const std::string& father_id, const std::string& mother_id);
 private:
+    void add(const std::string& id, const std::string& father_id, const std::string& mother_id);
     Individual *create_or_get(const std::string &id);
-    std::map<std::string, Individual*> individuals;
+    std::unordered_set<IndividualBase *, IndividualHash, IndividualEquals> individuals;
     std::set<Individual*> roots;
     long elements = 0;
 
