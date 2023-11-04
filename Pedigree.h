@@ -20,17 +20,17 @@ public:
 
     [[nodiscard]] long size() const;
 private:
-    void add(const std::string& id, const std::string& father_id, const std::string& mother_id);
-    Individual *create_or_get(const std::string &id);
-    std::unordered_set<IndividualBase *, IndividualHash, IndividualEquals> individuals;
+    std::map<IndividualId*, Individual*, IndividualIdCompare> individuals;
     std::set<Individual*> roots;
     long elements = 0;
 
-    bool contains_id(const std::string &id);
+    void create(IndividualId *id);
 
-    static bool is_empty_id(const std::string &id) ;
+    void add(IndividualId *id, IndividualId *father_id, IndividualId *mother_id);
 
-    bool is_root(Individual *individual);
+    bool contains_id(IndividualId *id);
+
+    void link_parents(const IndividualEntry &entry);
 };
 
 

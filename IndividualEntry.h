@@ -8,9 +8,9 @@
 #include <string>
 
 struct IndividualEntry {
-    std::string id;
-    std::string father_id;
-    std::string mother_id;
+    IndividualId *id;
+    IndividualId *father_id;
+    IndividualId *mother_id;
 };
 
 #endif //TWORCZOSC_MILOSZA_INDIVIDUALENTRY_H

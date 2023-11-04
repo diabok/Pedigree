@@ -4,36 +4,28 @@
 #include <vector>
 #include <string>
 
-class IndividualBase {
-private:
-    std::string id;
-public:
-    explicit IndividualBase(std::string id): id(std::move(id)) {};
-    bool operator==(const IndividualBase &rhs) const;
-    [[nodiscard]] const std::string &get_id() const;
+struct IndividualId {
+    std::string specimen;
+    std::string country;
+    bool is_male;
+    unsigned long number;
+
+    static IndividualId *of(const std::string& id_string);
 };
 
-struct IndividualHash {
-    std::size_t operator()(const IndividualBase * individual) const {
-        return std::hash<std::string>()(individual->get_id());
-    }
+struct IndividualIdCompare {
+    bool operator()(const IndividualId *lhs, const IndividualId *rhs) const;
 };
 
-struct IndividualEquals {
-    bool operator()(const IndividualBase * lhs, const IndividualBase * rhs) const {
-        return lhs->get_id() == rhs->get_id();
-    }
-};
-
-class Individual: public IndividualBase {
+class Individual {
 private:
     std::vector<Individual*> parents;
     std::vector<Individual*> children;
-    std::string id;
+    IndividualId *id;
 public:
-    explicit Individual(std::string id): IndividualBase(std::move(id)) {};
+    explicit Individual(IndividualId * id): id(id) {};
 
-    Individual(const std::string& id, Individual *mother, Individual *father);
+    Individual(IndividualId *id, Individual *mother, Individual *father);
 
     bool has_parents();
 
